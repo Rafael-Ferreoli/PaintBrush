@@ -5,6 +5,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.Random;
 import javax.swing.JColorChooser;
 import model.Borracha;
@@ -23,7 +24,12 @@ import model.Piramide;
  */
 public class FrMain extends javax.swing.JFrame {
 
-    public int opcaoSelecionada = 0; //1-PONTO || 2-RETA || 3-CIRCULO|| 4-RETANGULO || 5 - BORRACHA || 6 - SPRAY || 7 - Cilindro || 8 - Poligono || 9 - Piramide
+    public int opcaoSelecionada = 0; //1-PONTO || 2-RETA || 3-CIRCULO|| 4-RETANGULO || 5 - BORRACHA || 6 - SPRAY || 7 - CILINDRO || 8 - POLIGONO || 9 - PIRAMIDE
+    private int raio = 15; // Raio da área de dispersão do spray
+    private int lastClickX = -1;
+    private int lastClickY = -1;
+    private int tamanho;
+
     Retangulo retangulo = new Retangulo();
     Circulo circulo = new Circulo();
     Reta reta = new Reta();
@@ -32,6 +38,7 @@ public class FrMain extends javax.swing.JFrame {
     Cilindro cilindro = new Cilindro();
     Poligono poligono = new Poligono();
     Piramide piramide = new Piramide();
+
     /**
      * Creates new form FrMain
      */
@@ -72,7 +79,6 @@ public class FrMain extends javax.swing.JFrame {
 
         jFrameDesenho.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jFrameDesenho.setMaximumSize(null);
-        jFrameDesenho.setMinimumSize(null);
         jFrameDesenho.setPreferredSize(new java.awt.Dimension(440, 764));
         jFrameDesenho.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -107,6 +113,7 @@ public class FrMain extends javax.swing.JFrame {
             .addGap(0, 438, Short.MAX_VALUE)
         );
 
+        btnPonto.setBackground(new java.awt.Color(153, 153, 153));
         btnPonto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icons8-ponto-32.png"))); // NOI18N
         btnPonto.setToolTipText("Ponto");
         btnPonto.setMaximumSize(new java.awt.Dimension(50, 40));
@@ -118,6 +125,7 @@ public class FrMain extends javax.swing.JFrame {
             }
         });
 
+        btnReta.setBackground(new java.awt.Color(153, 153, 153));
         btnReta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icons8-linha-32.png"))); // NOI18N
         btnReta.setToolTipText("Reta");
         btnReta.setMaximumSize(new java.awt.Dimension(50, 40));
@@ -167,6 +175,7 @@ public class FrMain extends javax.swing.JFrame {
             .addGap(0, 26, Short.MAX_VALUE)
         );
 
+        btnCirculo.setBackground(new java.awt.Color(153, 153, 153));
         btnCirculo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icons8-círculo-32.png"))); // NOI18N
         btnCirculo.setToolTipText("Círculo");
         btnCirculo.setMaximumSize(new java.awt.Dimension(50, 40));
@@ -178,6 +187,7 @@ public class FrMain extends javax.swing.JFrame {
             }
         });
 
+        btnRetangulo.setBackground(new java.awt.Color(153, 153, 153));
         btnRetangulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icons8-retângulo-32.png"))); // NOI18N
         btnRetangulo.setToolTipText("Quadrado");
         btnRetangulo.setMaximumSize(new java.awt.Dimension(50, 40));
@@ -189,6 +199,7 @@ public class FrMain extends javax.swing.JFrame {
             }
         });
 
+        btnBorracha.setBackground(new java.awt.Color(153, 153, 153));
         btnBorracha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icons8-borracha-32.png"))); // NOI18N
         btnBorracha.setToolTipText("Borracha");
         btnBorracha.setMaximumSize(new java.awt.Dimension(50, 40));
@@ -200,6 +211,7 @@ public class FrMain extends javax.swing.JFrame {
             }
         });
 
+        btnSpray.setBackground(new java.awt.Color(153, 153, 153));
         btnSpray.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icons8-desodorante-spray-32.png"))); // NOI18N
         btnSpray.setToolTipText("Spray");
         btnSpray.setMaximumSize(new java.awt.Dimension(50, 40));
@@ -211,7 +223,8 @@ public class FrMain extends javax.swing.JFrame {
             }
         });
 
-        btnCilindro.setIcon(new javax.swing.ImageIcon("C:\\Users\\rafae\\OneDrive\\Documentos\\NetBeansProjects\\paintBrushJava-main\\src\\main\\resources\\imagens\\icons8-three-dimensional-cylindrical-model-rotating-in-anticlockwise-rotation-32.png")); // NOI18N
+        btnCilindro.setBackground(new java.awt.Color(153, 153, 153));
+        btnCilindro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-three-dimensional-cylindrical-model-rotating-in-anticlockwise-rotation-32.png"))); // NOI18N
         btnCilindro.setToolTipText("Cilindro");
         btnCilindro.setMaximumSize(new java.awt.Dimension(50, 40));
         btnCilindro.setMinimumSize(new java.awt.Dimension(50, 40));
@@ -222,6 +235,7 @@ public class FrMain extends javax.swing.JFrame {
             }
         });
 
+        btnPoligono.setBackground(new java.awt.Color(153, 153, 153));
         btnPoligono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icons8-polígono-32.png"))); // NOI18N
         btnPoligono.setToolTipText("Polígono");
         btnPoligono.setMaximumSize(new java.awt.Dimension(50, 40));
@@ -233,6 +247,7 @@ public class FrMain extends javax.swing.JFrame {
             }
         });
 
+        btnTriangulo.setBackground(new java.awt.Color(153, 153, 153));
         btnTriangulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icons8-geometria-32.png"))); // NOI18N
         btnTriangulo.setToolTipText("Pirâmide");
         btnTriangulo.setMaximumSize(new java.awt.Dimension(50, 40));
@@ -244,6 +259,8 @@ public class FrMain extends javax.swing.JFrame {
             }
         });
 
+        btnBalde.setBackground(new java.awt.Color(153, 153, 153));
+        btnBalde.setForeground(new java.awt.Color(0, 0, 0));
         btnBalde.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icons8-balde-de-tinta-32.png"))); // NOI18N
         btnBalde.setToolTipText("Balde de Tinta");
         btnBalde.setMaximumSize(new java.awt.Dimension(50, 40));
@@ -255,18 +272,21 @@ public class FrMain extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("COR 1");
         jLabel1.setMaximumSize(new java.awt.Dimension(50, 10));
         jLabel1.setMinimumSize(new java.awt.Dimension(50, 10));
         jLabel1.setPreferredSize(new java.awt.Dimension(50, 10));
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("COR 2");
         jLabel2.setMaximumSize(new java.awt.Dimension(50, 10));
         jLabel2.setMinimumSize(new java.awt.Dimension(50, 10));
         jLabel2.setPreferredSize(new java.awt.Dimension(50, 10));
 
+        cbTexto.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         cbTexto.setLabel("MEDIDAS");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -276,7 +296,7 @@ public class FrMain extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jFrameDesenho, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
+                    .addComponent(jFrameDesenho, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnBalde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
@@ -388,20 +408,42 @@ public class FrMain extends javax.swing.JFrame {
         }
         if (opcaoSelecionada == 8) {
             ponto.corPrimaria = jCorPrincipal.getBackground();
+            ponto.corInterna = jCorSecundaria.getBackground();
             ponto.x = evt.getX();
             ponto.y = evt.getY();
-            ponto.desenhar(jFrameDesenho.getGraphics());
-            poligono.coordX.add(evt.getX());
-            poligono.coordY.add(evt.getY());
-            poligono.corPrimaria = jCorPrincipal.getBackground();
-            poligono.corSecundaria = jCorSecundaria.getBackground();
-            if (evt.isMetaDown()) {
-                poligono.desenhar(jFrameDesenho.getGraphics());
-                poligono.coordX.clear();
-                poligono.coordY.clear();
+            ponto.setTamanhoPonto(3); // Defina o tamanho do ponto temporário
+
+            if (!evt.isMetaDown()) {
+                // Adiciona um ponto ao polígono apenas quando o botão esquerdo do mouse for pressionado
+                poligono.setCorPrimaria(jCorPrincipal.getBackground());
+                poligono.setCorInterna(jCorSecundaria.getBackground());
+                poligono.adicionarPonto(evt.getX(), evt.getY());
+                // Desenhe o ponto temporário
+                ponto.desenhar(jFrameDesenho.getGraphics());
             }
 
+            // Verifica se o botão direito do mouse foi pressionado para finalizar o polígono
+            if (evt.isMetaDown()) {
+                if (lastClickX != -1 && lastClickY != -1) {
+                    // Adicione o último clique à lista de pontos
+                    poligono.adicionarPonto(lastClickX, lastClickY);
+
+                    // Desenhe o polígono com o último clique
+                    poligono.desenhar(jFrameDesenho.getGraphics());
+
+                    // Limpe o ponto temporário
+                    lastClickX = -1;
+                    lastClickY = -1;
+                    poligono.limparPontos();
+                }
+            } else {
+                // Armazene o ponto temporário
+                lastClickX = evt.getX();
+                lastClickY = evt.getY();
+            }
         }
+
+
     }//GEN-LAST:event_jFrameDesenhoMouseClicked
 
     private void jFrameDesenhoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrameDesenhoMousePressed
@@ -440,69 +482,85 @@ public class FrMain extends javax.swing.JFrame {
         opcaoSelecionada = 2;
         setTitle("RETA SELECIONADO");
     }//GEN-LAST:event_btnRetaMouseClicked
+    
+    private void desenharBorracha(int x, int y, Color backgroundColor, Borracha borracha) {
+        borracha.x = x;
+        borracha.y = y;
+        borracha.corPrimaria = backgroundColor;
+        borracha.desenhar(jFrameDesenho.getGraphics());
+    }
+
+    private void desenharSpray(int x, int y, Color corPrimaria, int raio, Ponto ponto, Graphics g) {
+        ponto.corPrimaria = corPrimaria;
+        Random gerador = new Random();
+        int numPontos = 50;
+
+        for (int i = 0; i < numPontos; i++) {
+            int numX = gerador.nextInt(2 * raio + 1) - raio;
+            int numY = gerador.nextInt(2 * raio + 1) - raio;
+            int offsetX = x - raio;
+            int offsetY = y - raio;
+
+            ponto.x = offsetX + numX;
+            ponto.y = offsetY + numY;
+
+            double distancia = Math.pow(x - ponto.x, 2) + Math.pow(y - ponto.y, 2);
+
+            if (distancia < raio * raio) {
+                ponto.desenhar(g);
+            }
+        }
+    }
 
     private void jFrameDesenhoMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrameDesenhoMouseDragged
         if (opcaoSelecionada == 5) {
-            borracha.x = evt.getX();
-            borracha.y = evt.getY();
-            borracha.corPrimaria = jFrameDesenho.getBackground();
-            borracha.desenhar(jFrameDesenho.getGraphics());
+            desenharBorracha(evt.getX(), evt.getY(), jFrameDesenho.getBackground(), borracha);
         }
+
         if (opcaoSelecionada == 6) {
-            ponto.corPrimaria = jCorPrincipal.getBackground();
-            Random gerador = new Random();
-            for (int i = 0; i < 30; i++) {
-                int numX = gerador.nextInt(30);
-                int numY = gerador.nextInt(30);
-                ponto.x = (evt.getX() - 15) + numX;
-                ponto.y = (evt.getY() - 15) + numY;
-                if ((((evt.getX()) - ponto.x) * ((evt.getX()) - ponto.x))
-                        + (((evt.getY()) - ponto.y) * ((evt.getY()) - ponto.y)) < (15 * 15)) {
-                    ponto.desenhar(jFrameDesenho.getGraphics());
-                }
-            }
+            desenharSpray(evt.getX(), evt.getY(), jCorPrincipal.getBackground(), raio, ponto, jFrameDesenho.getGraphics());
         }
+
+
     }//GEN-LAST:event_jFrameDesenhoMouseDragged
 
-    private void jFrameDesenhoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrameDesenhoMouseReleased
+    private void desenharObjeto(int opcaoSelecionada, Graphics g, int x, int y, Color corPrimaria, Color corSecundaria, boolean mostrarArea) {
         if (opcaoSelecionada == 2) {
-            reta.showArea = cbTexto.getState();
-            reta.x1 = evt.getX();
-            reta.y1 = evt.getY();
-            reta.desenhar(jFrameDesenho.getGraphics());
+            reta.showArea = mostrarArea;
+            reta.x1 = x;
+            reta.y1 = y;
+            reta.desenhar(g);
+        } else if (opcaoSelecionada == 3) {
+            circulo.showArea = mostrarArea;
+            circulo.raio = Math.abs(x - circulo.x);
+            circulo.diametro = Math.abs(y - circulo.y);
+            circulo.desenhar(g);
+        } else if (opcaoSelecionada == 4) {
+            retangulo.showArea = mostrarArea;
+            retangulo.base = Math.abs(x - retangulo.x);
+            retangulo.largura = Math.abs(y - retangulo.y);
+            retangulo.corInterna = corSecundaria;
+            retangulo.corPrimaria = corPrimaria;
+            retangulo.desenhar(g);
+        } else if (opcaoSelecionada == 7) {
+            cilindro.showArea = mostrarArea;
+            cilindro.x1 = x;
+            cilindro.y1 = y;
+            cilindro.corPrimaria = corPrimaria;
+            cilindro.corInterna = corSecundaria;
+            cilindro.desenhar(g);
+        } else if (opcaoSelecionada == 9) {
+            piramide.x1 = x;
+            piramide.y1 = y;
+            piramide.largura = x - piramide.x;
+            piramide.altura = y - piramide.y;
+            piramide.desenhar(g);
         }
+        // Adicione mais condições if para outras opções, se necessário
+    }
 
-        if (opcaoSelecionada == 3) {
-            circulo.showArea = cbTexto.getState();
-            circulo.raio = evt.getX() - circulo.x;
-            circulo.diametro = evt.getY() - circulo.y;
-            circulo.desenhar(jFrameDesenho.getGraphics());
-        }
-
-        if (opcaoSelecionada == 4) {
-            retangulo.showArea = cbTexto.getState();
-            retangulo.base = evt.getX() - retangulo.x;
-            retangulo.largura = evt.getY() - retangulo.y;
-            retangulo.corInterna = jCorSecundaria.getBackground();
-            retangulo.corPrimaria = jCorPrincipal.getBackground();
-            retangulo.desenhar(jFrameDesenho.getGraphics());
-        }
-
-        if (opcaoSelecionada == 7) {
-            cilindro.showArea = cbTexto.getState();
-            cilindro.x1 = evt.getX();
-            cilindro.y1 = evt.getY();
-            cilindro.corPrimaria = jCorPrincipal.getBackground();
-            cilindro.corInterna = jCorSecundaria.getBackground();
-            cilindro.desenhar(jFrameDesenho.getGraphics());
-        }
-        if (opcaoSelecionada == 9) {
-            piramide.x1 = evt.getX();
-            piramide.y1 = evt.getY();
-            piramide.largura = evt.getX() - piramide.x;
-            piramide.altura = evt.getY() - piramide.y;
-            piramide.desenhar(jFrameDesenho.getGraphics());
-        }
+    private void jFrameDesenhoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrameDesenhoMouseReleased
+        desenharObjeto(opcaoSelecionada, jFrameDesenho.getGraphics(), evt.getX(), evt.getY(), jCorPrincipal.getBackground(), jCorSecundaria.getBackground(), cbTexto.getState());
     }//GEN-LAST:event_jFrameDesenhoMouseReleased
 
     private void btnCirculoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCirculoMouseClicked
@@ -545,22 +603,79 @@ public class FrMain extends javax.swing.JFrame {
         setTitle("BALDE SELECIONADO");
     }//GEN-LAST:event_btnBaldeActionPerformed
 
-    private void jFrameDesenhoMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jFrameDesenhoMouseWheelMoved
-        if (opcaoSelecionada == 5) {
-            int rolagem = evt.getWheelRotation();
-            if (rolagem > 0) {
-                borracha.tamanhoBorracha--;
-
-            } else {
-                borracha.tamanhoBorracha++;
-            }
-            if (borracha.tamanhoBorracha < 5) {
-                borracha.tamanhoBorracha = 5;
-            } else if (borracha.tamanhoBorracha > 50) {
-                borracha.tamanhoBorracha = 50;
-            }
-            setTitle("BORRACHA SELECIONADA, TAMANHO DA BORRACHA: " + borracha.tamanhoBorracha);
+    private void atualizarTamanho(int rolagem, int tamanhoMaximo, int tamanhoMinimo, int valorPadrao, Object objeto, String tipo) {
+        if (rolagem > 0) {
+            tamanho--;
+        } else {
+            tamanho++;
         }
+
+        if (tamanho < tamanhoMinimo) {
+            tamanho = tamanhoMinimo;
+        } else if (tamanho > tamanhoMaximo) {
+            tamanho = tamanhoMaximo;
+        }
+
+        if (tipo.equals("Ponto")) {
+            ((Ponto) objeto).setTamanhoPonto(tamanho);
+            setTitle("PONTO SELECIONADO, TAMANHO DO PONTO: " + tamanho);
+        }
+
+        if (tipo.equals("Reta")) {
+            ((Reta) objeto).setTamanhoPonto(tamanho);
+            setTitle("RETA SELECIONADO, TAMANHO DA RETA: " + tamanho);
+        }
+
+        if (tipo.equals("Circulo")) {
+            ((Circulo) objeto).setTamanhoPonto(tamanho);
+            setTitle("CÍRCULO SELECIONADO, TAMANHO DO CÍRCULO: " + tamanho);
+        }
+
+        if (tipo.equals("Retangulo")) {
+            ((Retangulo) objeto).setTamanhoPonto(tamanho);
+            setTitle("RETÂNGULO SELECIONADO, TAMANHO DA RETA: " + tamanho);
+        }
+
+        if (tipo.equals("Borracha")) {
+            ((Borracha) objeto).setTamanhoBorracha(tamanho);
+            setTitle("BORRACHA SELECIONADA, TAMANHO DA BORRACHA: " + tamanho);
+        }
+
+        if (tipo.equals("Spray")) {
+            this.raio = tamanho;
+            setTitle("SPRAY SELECIONADO, TAMANHO DO SPRAY: " + tamanho);
+        }
+
+        if (tipo.equals("Cilindro")) {
+            ((Cilindro) objeto).setEspessuraLinha(tamanho);
+            setTitle("CILINDRO SELECIONADO, TAMANHO DO CILINDRO: " + tamanho);
+        }
+
+        if (tipo.equals("Poligono")) {
+            ((Poligono) objeto).setEspessuraLinha(tamanho);
+            setTitle("POLIGONO SELECIONADO, TAMANHO DO POLIGONO: " + tamanho);
+        }
+    }
+
+    private void jFrameDesenhoMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jFrameDesenhoMouseWheelMoved
+        if (opcaoSelecionada == 1) {
+            atualizarTamanho(evt.getWheelRotation(), 5, 1, 3, ponto, "Ponto");
+        } else if (opcaoSelecionada == 2) {
+            atualizarTamanho(evt.getWheelRotation(), 5, 1, 3, reta, "Reta");
+        } else if (opcaoSelecionada == 3) {
+            atualizarTamanho(evt.getWheelRotation(), 5, 1, 3, circulo, "Circulo");
+        } else if (opcaoSelecionada == 4) {
+            atualizarTamanho(evt.getWheelRotation(), 5, 1, 3, retangulo, "Retangulo");
+        } else if (opcaoSelecionada == 5) {
+            atualizarTamanho(evt.getWheelRotation(), 50, 5, 10, borracha, "Borracha");
+        } else if (opcaoSelecionada == 6) {
+            atualizarTamanho(evt.getWheelRotation(), 50, 5, 5, this, "Spray");
+        } else if (opcaoSelecionada == 7) {
+            atualizarTamanho(evt.getWheelRotation(), 5, 1, 1, cilindro, "Cilindro");
+        } else if (opcaoSelecionada == 8) {
+            atualizarTamanho(evt.getWheelRotation(), 5, 1, 1, poligono, "Poligono");
+        }
+
     }//GEN-LAST:event_jFrameDesenhoMouseWheelMoved
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

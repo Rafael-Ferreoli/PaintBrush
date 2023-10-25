@@ -12,7 +12,7 @@ import java.awt.Graphics;
  */
 public class Borracha extends D2{
     public int base,largura;
-    public int tamanhoBorracha = 20;
+    private int tamanhoBorracha = 20;
     @Override
     public float area() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -27,6 +27,13 @@ public class Borracha extends D2{
     public void desenhar(Graphics g){
         g.setColor(corPrimaria);
         g.fillRect(x, y, tamanhoBorracha, tamanhoBorracha);
+    }
+
+    /**
+     * @param tamanhoBorracha the tamanhoBorracha to set
+     */
+    public void setTamanhoBorracha(int tamanhoBorracha) {
+        this.tamanhoBorracha = tamanhoBorracha;
     }
     
 }
