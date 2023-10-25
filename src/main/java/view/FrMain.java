@@ -25,7 +25,7 @@ import model.Piramide;
 public class FrMain extends javax.swing.JFrame {
 
     public int opcaoSelecionada = 0; //1-PONTO || 2-RETA || 3-CIRCULO|| 4-RETANGULO || 5 - BORRACHA || 6 - SPRAY || 7 - CILINDRO || 8 - POLIGONO || 9 - PIRAMIDE
-    private int raio = 15; // Raio da área de dispersão do spray
+    private int raio = 16; // Raio da área de dispersão do spray
     private int lastClickX = -1;
     private int lastClickY = -1;
     private int tamanho;
@@ -498,8 +498,8 @@ public class FrMain extends javax.swing.JFrame {
         for (int i = 0; i < numPontos; i++) {
             int numX = gerador.nextInt(2 * raio + 1) - raio;
             int numY = gerador.nextInt(2 * raio + 1) - raio;
-            int offsetX = x - raio;
-            int offsetY = y - raio;
+            int offsetX = x - 8;
+            int offsetY = y - 8;
 
             ponto.x = offsetX + numX;
             ponto.y = offsetY + numY;
@@ -675,6 +675,132 @@ public class FrMain extends javax.swing.JFrame {
         } else if (opcaoSelecionada == 8) {
             atualizarTamanho(evt.getWheelRotation(), 5, 1, 1, poligono, "Poligono");
         }
+        /*
+        if (opcaoSelecionada == 1) {
+            int rolagem = evt.getWheelRotation();
+            if (rolagem > 0) {
+                ponto.tamanhoPonto--;
+
+            } else {
+                ponto.tamanhoPonto++;
+            }
+            if (ponto.tamanhoPonto < 1) {
+                ponto.tamanhoPonto = 1;
+            } else if (ponto.tamanhoPonto > 5) {
+                ponto.tamanhoPonto = 5;
+            }
+            setTitle("PONTO SELECIONADO, TAMANHO DO PONTO: " + ponto.tamanhoPonto);
+        }
+
+        if (opcaoSelecionada == 2) {
+            int rolagem = evt.getWheelRotation();
+            if (rolagem > 0) {
+                reta.tamanhoPonto--;
+
+            } else {
+                reta.tamanhoPonto++;
+            }
+            if (reta.tamanhoPonto < 1) {
+                reta.tamanhoPonto = 1;
+            } else if (reta.tamanhoPonto > 5) {
+                reta.tamanhoPonto = 5;
+            }
+            setTitle("RETA SELECIONADO, TAMANHO DA RETA: " + reta.tamanhoPonto);
+        }
+
+        if (opcaoSelecionada == 3) {
+            int rolagem = evt.getWheelRotation();
+            if (rolagem > 0) {
+                circulo.tamanhoPonto--;
+
+            } else {
+                circulo.tamanhoPonto++;
+            }
+            if (circulo.tamanhoPonto < 1) {
+                circulo.tamanhoPonto = 1;
+            } else if (circulo.tamanhoPonto > 5) {
+                circulo.tamanhoPonto = 5;
+            }
+            setTitle("CÍRCULO SELECIONADO, TAMANHO DO CÍRCULO: " + circulo.tamanhoPonto);
+        }
+
+        if (opcaoSelecionada == 4) {
+            int rolagem = evt.getWheelRotation();
+            if (rolagem > 0) {
+                retangulo.tamanhoPonto--;
+
+            } else {
+                retangulo.tamanhoPonto++;
+            }
+            if (retangulo.tamanhoPonto < 1) {
+                retangulo.tamanhoPonto = 1;
+            } else if (retangulo.tamanhoPonto > 5) {
+                retangulo.tamanhoPonto = 5;
+            }
+            setTitle("RETÂNGULO SELECIONADO, TAMANHO DA RETA: " + retangulo.tamanhoPonto);
+        }
+
+        if (opcaoSelecionada == 5) {
+            int rolagem = evt.getWheelRotation();
+            if (rolagem > 0) {
+                borracha.tamanhoBorracha--;
+
+            } else {
+                borracha.tamanhoBorracha++;
+            }
+            if (borracha.tamanhoBorracha < 5) {
+                borracha.tamanhoBorracha = 5;
+            } else if (borracha.tamanhoBorracha > 50) {
+                borracha.tamanhoBorracha = 50;
+            }
+            setTitle("BORRACHA SELECIONADA, TAMANHO DA BORRACHA: " + borracha.tamanhoBorracha);
+        }
+        if (opcaoSelecionada == 6) {
+            int rolagem = evt.getWheelRotation();
+            if (rolagem > 0) {
+                this.raio--;
+
+            } else {
+                this.raio++;
+            }
+            if (this.raio < 5) {
+                this.raio = 5;
+            } else if (this.raio > 50) {
+                this.raio = 50;
+            }
+            setTitle("SPRAY SELECIONADO, TAMANHO DO SPRAY: " + this.raio);
+        }
+        if (opcaoSelecionada == 7) {
+            int rolagem = evt.getWheelRotation();
+            if (rolagem > 0) {
+                cilindro.espessuraLinha--;
+
+            } else {
+                cilindro.espessuraLinha++;
+            }
+            if (cilindro.espessuraLinha < 1) {
+                cilindro.espessuraLinha = 1;
+            } else if (cilindro.espessuraLinha > 5) {
+                cilindro.espessuraLinha = 5;
+            }
+            setTitle("CILINDRO SELECIONADO, TAMANHO DO CILINDRO: " + cilindro.espessuraLinha);
+        }
+        if (opcaoSelecionada == 8) {
+            int rolagem = evt.getWheelRotation();
+            if (rolagem > 0) {
+                poligono.espessuraLinha--;
+
+            } else {
+                poligono.espessuraLinha++;
+            }
+            if (poligono.espessuraLinha < 1) {
+                poligono.espessuraLinha = 1;
+            } else if (poligono.espessuraLinha > 5) {
+                poligono.espessuraLinha = 5;
+            }
+            setTitle("POLIGONO SELECIONADO, TAMANHO DO POLIGONO: " + poligono.espessuraLinha);
+        }
+        */
 
     }//GEN-LAST:event_jFrameDesenhoMouseWheelMoved
 
