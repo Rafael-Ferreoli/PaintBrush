@@ -11,12 +11,14 @@ import java.awt.Graphics;
  *
  * @author rafael
  */
+
 abstract public class D2 extends Ponto{
     public Color corInterna;
     public boolean showArea = false;
     abstract public float area();
     abstract public float perimetro();
     
+    /*
     @Override
     public void desenhar(Graphics g){
         if(showArea){
@@ -25,5 +27,5 @@ abstract public class D2 extends Ponto{
         }
     }
     
-    
+    */
 }

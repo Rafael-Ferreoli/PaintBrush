@@ -46,5 +46,22 @@ public class Circulo extends D2 {
         g2d.drawOval(x, y, (int) raio, (int) raio);
         g2d.setColor(corPrimaria);
         g2d.fillOval(x, y, (int) raio, (int) raio);
+        if (showArea) {
+            g.setColor(Color.BLACK);
+            desenharInformacoes(g);
+        }
+    }
+
+    public void desenharInformacoes(Graphics g) {
+        float area = area();
+        float volume = perimetro();
+
+        // Formata os valores com uma casa decimal
+        String areaFormatada = String.format("%.1f", area);
+        String perimetroFormatado = String.format("%.1f", volume);
+
+        String informacoes = "Área: " + areaFormatada + "  Perimetro: " + perimetroFormatado;
+
+        g.drawString(informacoes, x, y);
     }
 }

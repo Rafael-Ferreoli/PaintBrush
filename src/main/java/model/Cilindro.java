@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.BasicStroke;
+import java.text.DecimalFormat;
 
 /**
  * Classe para representar um cilindro.
@@ -45,10 +46,23 @@ public class Cilindro extends Ponto {
         g.drawOval(x, y - offsetY, Math.abs(x1 - x), height); // parte de cima
         g.drawOval(x, y1 - offsetY, Math.abs(x1 - x), height); // parte de baixo
 
-        g.setColor(Color.BLACK);
         if (showArea) {
-            g.drawString("Area: " + calculaArea() + " Volume: " + calculaVolume(), x - 60, y - 5);
+            g.setColor(Color.BLACK);
+            desenharInformacoes(g);
         }
+    }
+
+    public void desenharInformacoes(Graphics g) {
+        float area = calculaArea();
+        float volume = calculaVolume();
+
+        // Formata os valores com uma casa decimal
+        String areaFormatada = String.format("%.1f", area);
+        String volumeFormatado = String.format("%.1f", volume);
+
+        String informacoes = "Área: " + areaFormatada + "  Volume: " + volumeFormatado;
+
+        g.drawString(informacoes, x - 60, y - 5);
     }
 
     public float calculaVolume() {

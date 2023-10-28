@@ -34,9 +34,11 @@ public class Piramide extends D2 {
     public void desenhar(Graphics g) {
        g.setColor(corPrimaria);
        g.drawLine(x,y,x+largura/2,y-altura);
-       g.drawLine(x, y1, x+largura/2, y-altura);
        g.drawLine(x+largura, y, x+largura/2, y-altura);
-       g.drawLine(x+largura, y1, x+largura/2, y-altura);
        g.drawRect(x, y, largura, altura);
+       g.drawLine(x, y1, x+largura/2, y-altura);
+       g.drawLine(x+largura, y1, x+largura/2, y-altura);
     }
 }
+
+//coloquei as duas linhas centrais depois de fazer o retangulo para pegar as pontas inferiores.
