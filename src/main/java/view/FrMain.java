@@ -6,8 +6,16 @@ package view;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
+import javax.imageio.ImageIO;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import model.Borracha;
 import model.Cilindro;
 import model.Circulo;
@@ -72,9 +80,10 @@ public class FrMain extends javax.swing.JFrame {
         btnBalde = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        cbTexto = new java.awt.Checkbox();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
+        btnSalvar = new javax.swing.JButton();
+        cbTexto = new java.awt.Checkbox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(785, 512));
@@ -82,7 +91,7 @@ public class FrMain extends javax.swing.JFrame {
 
         jFrameDesenho.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jFrameDesenho.setMaximumSize(null);
-        jFrameDesenho.setPreferredSize(new java.awt.Dimension(419, 761));
+        jFrameDesenho.setPreferredSize(new java.awt.Dimension(382, 761));
         jFrameDesenho.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 jFrameDesenhoMouseDragged(evt);
@@ -109,11 +118,11 @@ public class FrMain extends javax.swing.JFrame {
         jFrameDesenho.setLayout(jFrameDesenhoLayout);
         jFrameDesenhoLayout.setHorizontalGroup(
             jFrameDesenhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 759, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jFrameDesenhoLayout.setVerticalGroup(
             jFrameDesenhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
+            .addGap(0, 394, Short.MAX_VALUE)
         );
 
         btnPonto.setBackground(new java.awt.Color(255, 255, 255));
@@ -289,18 +298,32 @@ public class FrMain extends javax.swing.JFrame {
         jLabel2.setMinimumSize(new java.awt.Dimension(50, 10));
         jLabel2.setPreferredSize(new java.awt.Dimension(50, 10));
 
+        btnSalvar.setBackground(new java.awt.Color(51, 102, 255));
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icons8-salvar-20.png"))); // NOI18N
+        btnSalvar.setMaximumSize(new java.awt.Dimension(40, 40));
+        btnSalvar.setMinimumSize(new java.awt.Dimension(40, 40));
+        btnSalvar.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
         cbTexto.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         cbTexto.setLabel("MEDIDAS");
+        cbTexto.setMinimumSize(new java.awt.Dimension(80, 15));
+        cbTexto.setPreferredSize(new java.awt.Dimension(80, 15));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator2)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jFrameDesenho, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 761, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jSeparator2)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jFrameDesenho, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(btnBalde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
@@ -324,57 +347,60 @@ public class FrMain extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jCorPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jCorSecundaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cbTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(18, Short.MAX_VALUE))
-            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnReta, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCirculo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRetangulo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSpray, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCilindro, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPoligono, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPiramide, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPonto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBalde, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBorracha, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jCorSecundaria, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCorPrincipal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbTexto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(4, 4, 4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jCorSecundaria, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                            .addComponent(jCorPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(5, 5, 5)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnReta, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCirculo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnRetangulo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSpray, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCilindro, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnPoligono, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnPiramide, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnPonto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBalde, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBorracha, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(3, 3, 3)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFrameDesenho, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jFrameDesenho, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        setBounds(0, 0, 801, 509);
+        cbTexto.getAccessibleContext().setAccessibleDescription("");
+
+        setBounds(0, 0, 802, 528);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void setaCores(){
+    private void setaCores() {
         btnPonto.setBackground(Color.white);
         btnReta.setBackground(Color.white);
         btnBorracha.setBackground(Color.white);
@@ -385,9 +411,9 @@ public class FrMain extends javax.swing.JFrame {
         btnCirculo.setBackground(Color.white);
         btnPiramide.setBackground(Color.white);
         btnSpray.setBackground(Color.white);
-        
+
     }
-    
+
     private void btnPontoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPontoMouseClicked
         opcaoSelecionada = 1;
         setTitle("PONTO SELECIONADO");
@@ -423,95 +449,13 @@ public class FrMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jCorSecundariaMouseClicked
 
-    private void jFrameDesenhoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrameDesenhoMouseClicked
-        if (opcaoSelecionada == 0) {
-            jFrameDesenho.setBackground(jCorPrincipal.getBackground());
-        }
-        if (opcaoSelecionada == 1) {
-            ponto.corPrimaria = jCorPrincipal.getBackground();
-            ponto.x = evt.getX();
-            ponto.y = evt.getY();
-            ponto.desenhar(jFrameDesenho.getGraphics());
-        }
-        if (opcaoSelecionada == 8) {
-            ponto.corPrimaria = jCorPrincipal.getBackground();
-            ponto.corInterna = jCorSecundaria.getBackground();
-            ponto.x = evt.getX();
-            ponto.y = evt.getY();
-            ponto.setTamanhoPonto(3); // Defina o tamanho do ponto temporário
-
-            if (!evt.isMetaDown()) {
-                // Adiciona um ponto ao polígono apenas quando o botão esquerdo do mouse for pressionado
-                poligono.setCorPrimaria(jCorPrincipal.getBackground());
-                poligono.setCorInterna(jCorSecundaria.getBackground());
-                poligono.adicionarPonto(evt.getX(), evt.getY());
-                // Desenhe o ponto temporário
-                ponto.desenhar(jFrameDesenho.getGraphics());
-            }
-
-            // Verifica se o botão direito do mouse foi pressionado para finalizar o polígono
-            if (evt.isMetaDown()) {
-                if (lastClickX != -1 && lastClickY != -1) {
-                    // Adicione o último clique à lista de pontos
-                    poligono.adicionarPonto(lastClickX, lastClickY);
-
-                    // Desenhe o polígono com o último clique
-                    poligono.desenhar(jFrameDesenho.getGraphics());
-
-                    // Limpe o ponto temporário
-                    lastClickX = -1;
-                    lastClickY = -1;
-                    poligono.limparPontos();
-                }
-            } else {
-                // Armazene o ponto temporário
-                lastClickX = evt.getX();
-                lastClickY = evt.getY();
-            }
-        }
-
-
-    }//GEN-LAST:event_jFrameDesenhoMouseClicked
-
-    private void jFrameDesenhoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrameDesenhoMousePressed
-        if (opcaoSelecionada == 2) {
-            reta.corPrimaria = jCorPrincipal.getBackground();
-            reta.x = evt.getX();
-            reta.y = evt.getY();
-
-        }
-        if (opcaoSelecionada == 3) {
-            circulo.corPrimaria = jCorPrincipal.getBackground();
-            circulo.corInterna = jCorSecundaria.getBackground();
-            circulo.x = evt.getX();
-            circulo.y = evt.getY();
-        }
-        if (opcaoSelecionada == 4) {
-            retangulo.x = evt.getX();
-            retangulo.y = evt.getY();
-        }
-        if (opcaoSelecionada == 5) {
-            borracha.x = evt.getX();
-            borracha.y = evt.getY();
-        }
-        if (opcaoSelecionada == 7) {
-            cilindro.x = evt.getX();
-            cilindro.y = evt.getY();
-        }
-
-        if (opcaoSelecionada == 9) {
-            piramide.x = evt.getX();
-            piramide.y = evt.getY();
-        }
-    }//GEN-LAST:event_jFrameDesenhoMousePressed
-
     private void btnRetaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRetaMouseClicked
         opcaoSelecionada = 2;
         setTitle("RETA SELECIONADO");
         setaCores();
         btnReta.setBackground(Color.gray);
     }//GEN-LAST:event_btnRetaMouseClicked
-    
+
     private void desenharBorracha(int x, int y, Color backgroundColor, Borracha borracha) {
         borracha.x = x;
         borracha.y = y;
@@ -540,18 +484,6 @@ public class FrMain extends javax.swing.JFrame {
             }
         }
     }
-
-    private void jFrameDesenhoMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrameDesenhoMouseDragged
-        if (opcaoSelecionada == 5) {
-            desenharBorracha(evt.getX(), evt.getY(), jFrameDesenho.getBackground(), borracha);
-        }
-
-        if (opcaoSelecionada == 6) {
-            desenharSpray(evt.getX(), evt.getY(), jCorPrincipal.getBackground(), raio, ponto, jFrameDesenho.getGraphics());
-        }
-
-
-    }//GEN-LAST:event_jFrameDesenhoMouseDragged
 
     private void desenharObjeto(int opcaoSelecionada, Graphics g, int x, int y, Color corPrimaria, Color corSecundaria, boolean mostrarArea) {
         if (opcaoSelecionada == 2) {
@@ -589,10 +521,6 @@ public class FrMain extends javax.swing.JFrame {
         }
         // Adicione mais condições if para outras opções, se necessário
     }
-
-    private void jFrameDesenhoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrameDesenhoMouseReleased
-        desenharObjeto(opcaoSelecionada, jFrameDesenho.getGraphics(), evt.getX(), evt.getY(), jCorPrincipal.getBackground(), jCorSecundaria.getBackground(), cbTexto.getState());
-    }//GEN-LAST:event_jFrameDesenhoMouseReleased
 
     private void btnCirculoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCirculoMouseClicked
         opcaoSelecionada = 3;
@@ -703,6 +631,124 @@ public class FrMain extends javax.swing.JFrame {
             setTitle("POLIGONO SELECIONADO, TAMANHO DO POLIGONO: " + tamanho);
         }
     }
+
+    private void salvarComoPNG(File arquivo) throws IOException {
+        int largura = jFrameDesenho.getWidth();
+        int altura = jFrameDesenho.getHeight();
+        BufferedImage imagem = new BufferedImage(largura, altura, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = imagem.createGraphics();
+
+        // Pinte o conteúdo da área de desenho diretamente na imagem
+        jFrameDesenho.paint(g2d);
+
+        g2d.dispose(); // Libere os recursos gráficos
+
+        ImageIO.write(imagem, "png", arquivo);
+    }
+
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileFilter(new FileNameExtensionFilter("Imagens PNG", "png"));
+
+        int escolha = chooser.showSaveDialog(this);
+
+        if (escolha == JFileChooser.APPROVE_OPTION) {
+            File arquivo = chooser.getSelectedFile();
+            try {
+                salvarComoPNG(arquivo);
+                JOptionPane.showMessageDialog(this, "Arquivo salvo com sucesso!");
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Erro ao salvar o arquivo: " + ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void jFrameDesenhoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrameDesenhoMouseReleased
+        desenharObjeto(opcaoSelecionada, jFrameDesenho.getGraphics(), evt.getX(), evt.getY(), jCorPrincipal.getBackground(), jCorSecundaria.getBackground(), cbTexto.getState());
+    }//GEN-LAST:event_jFrameDesenhoMouseReleased
+
+    private void jFrameDesenhoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrameDesenhoMousePressed
+        if (opcaoSelecionada == 2) {
+            reta.corPrimaria = jCorPrincipal.getBackground();
+            reta.x = evt.getX();
+            reta.y = evt.getY();
+
+        }
+        if (opcaoSelecionada == 3) {
+            circulo.corPrimaria = jCorPrincipal.getBackground();
+            circulo.corInterna = jCorSecundaria.getBackground();
+            circulo.x = evt.getX();
+            circulo.y = evt.getY();
+        }
+        if (opcaoSelecionada == 4) {
+            retangulo.x = evt.getX();
+            retangulo.y = evt.getY();
+        }
+        if (opcaoSelecionada == 5) {
+            borracha.x = evt.getX();
+            borracha.y = evt.getY();
+        }
+        if (opcaoSelecionada == 7) {
+            cilindro.x = evt.getX();
+            cilindro.y = evt.getY();
+        }
+
+        if (opcaoSelecionada == 9) {
+            piramide.x = evt.getX();
+            piramide.y = evt.getY();
+        }
+    }//GEN-LAST:event_jFrameDesenhoMousePressed
+
+    private void jFrameDesenhoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrameDesenhoMouseClicked
+        if (opcaoSelecionada == 0) {
+            jFrameDesenho.setBackground(jCorPrincipal.getBackground());
+        }
+        if (opcaoSelecionada == 1) {
+            ponto.corPrimaria = jCorPrincipal.getBackground();
+            ponto.x = evt.getX();
+            ponto.y = evt.getY();
+            ponto.desenhar(jFrameDesenho.getGraphics());
+        }
+        if (opcaoSelecionada == 8) {
+            ponto.corPrimaria = jCorPrincipal.getBackground();
+            ponto.corInterna = jCorSecundaria.getBackground();
+            ponto.x = evt.getX();
+            ponto.y = evt.getY();
+            ponto.setTamanhoPonto(3); // Defina o tamanho do ponto temporário
+
+            if (!evt.isMetaDown()) {
+                // Adiciona um ponto ao polígono apenas quando o botão esquerdo do mouse for pressionado
+                poligono.setCorPrimaria(jCorPrincipal.getBackground());
+                poligono.setCorInterna(jCorSecundaria.getBackground());
+                poligono.adicionarPonto(evt.getX(), evt.getY());
+                // Desenhe o ponto temporário
+                ponto.desenhar(jFrameDesenho.getGraphics());
+            }
+
+            // Verifica se o botão direito do mouse foi pressionado para finalizar o polígono
+            if (evt.isMetaDown()) {
+                if (lastClickX != -1 && lastClickY != -1) {
+                    // Adicione o último clique à lista de pontos
+                    poligono.adicionarPonto(lastClickX, lastClickY);
+
+                    // Desenhe o polígono com o último clique
+                    poligono.desenhar(jFrameDesenho.getGraphics());
+
+                    // Limpe o ponto temporário
+                    lastClickX = -1;
+                    lastClickY = -1;
+                    poligono.limparPontos();
+                }
+            } else {
+                // Armazene o ponto temporário
+                lastClickX = evt.getX();
+                lastClickY = evt.getY();
+            }
+        }
+
+    }//GEN-LAST:event_jFrameDesenhoMouseClicked
 
     private void jFrameDesenhoMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jFrameDesenhoMouseWheelMoved
         if (opcaoSelecionada == 1) {
@@ -847,9 +893,19 @@ public class FrMain extends javax.swing.JFrame {
             }
             setTitle("POLIGONO SELECIONADO, TAMANHO DO POLIGONO: " + poligono.espessuraLinha);
         }
-        */
-
+         */
     }//GEN-LAST:event_jFrameDesenhoMouseWheelMoved
+
+    private void jFrameDesenhoMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrameDesenhoMouseDragged
+        if (opcaoSelecionada == 5) {
+            desenharBorracha(evt.getX(), evt.getY(), jFrameDesenho.getBackground(), borracha);
+        }
+
+        if (opcaoSelecionada == 6) {
+            desenharSpray(evt.getX(), evt.getY(), jCorPrincipal.getBackground(), raio, ponto, jFrameDesenho.getGraphics());
+        }
+
+    }//GEN-LAST:event_jFrameDesenhoMouseDragged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBalde;
@@ -861,6 +917,7 @@ public class FrMain extends javax.swing.JFrame {
     private javax.swing.JButton btnPonto;
     private javax.swing.JButton btnReta;
     private javax.swing.JButton btnRetangulo;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnSpray;
     private java.awt.Checkbox cbTexto;
     private javax.swing.JPanel jCorPrincipal;
